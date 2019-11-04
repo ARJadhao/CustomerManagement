@@ -1,6 +1,7 @@
 package com.emart.customers.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,7 +22,12 @@ public class Customer {
 	@Id
 	@GeneratedValue(generator="custId")
 	private Integer customerId;
+	
+	@NotEmpty(message = "first name must not be empty")
 	private String name;
+	
+	@NotEmpty(message = "email must not be empty")
+	@Email(message = "email should be a valid email")
 	private String emailId;
 	
 	// one customer has one address

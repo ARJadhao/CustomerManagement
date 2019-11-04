@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.emart.customers.entity.Customer;
+import com.emart.customers.exception.CustomerException;
 import com.emart.customers.repo.CustomerRepository;
 
 @Service
@@ -23,9 +24,14 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer getCustomer(Integer id) {
+	public Customer getCustomer(Integer id) throws CustomerException {
 		// TODO Auto-generated method stub
 		Optional<Customer> custOpt = custRepo.findById(id);
+		if (custOpt.get() == null || custOpt.get().getCustomerId() <=0) {
+			
+			throw new CustomerException("Customer does not exist!");
+		}
+		
 		return custOpt.get();
 	}
 
@@ -43,19 +49,30 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public void deleteCustomer(Integer id) {
+	public void deleteCustomer(Integer id) throws CustomerException {
 		// TODO Auto-generated method stub
 		Optional<Customer> customer = custRepo.findById(id);
+		if (customer.get() == null || customer.get().getCustomerId() <=0) {
+			
+			throw new CustomerException("Customer does not exist!");
+		}
+		
 		custRepo.delete(customer.get());
 	}
 
 	@Override
-	public Customer updateCustomer(Integer id) {
+	public Customer updateCustomer(Integer id) throws CustomerException {
 		// TODO Auto-generated method stub
 		Optional<Customer> customer = custRepo.findById(id);
+		
+		if (customer.get() == null || customer.get().getCustomerId() <=0) {
+			
+			throw new CustomerException("Customer does not exist!");
+		}
+		
 		customer.get().setName("NewName");
 		custRepo.saveAndFlush(customer.get());
-		return null;
+		return customer.get();
 	}
 
 }

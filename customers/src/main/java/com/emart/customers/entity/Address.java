@@ -1,9 +1,11 @@
 package com.emart.customers.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,8 +17,12 @@ public class Address {
 	@Id
 	@GeneratedValue(generator="addressId")
 	private Integer addressId;
+	
+	@NotEmpty(message = "AddressLine1 must not be empty")
 	private String addressLine1;
 	private String addressLine2;
+	
+	//@NotEmpty(message = "pincode must not be empty")
 	private Long pinCode;
 	public Integer getAddressId() {
 		return addressId;

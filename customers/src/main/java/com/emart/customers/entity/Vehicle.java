@@ -1,9 +1,11 @@
 package com.emart.customers.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,7 +17,10 @@ public class Vehicle {
 	@Id
 	@GeneratedValue(generator="vehicleId")
 	private Integer vehicleId;
+	
+	@NotEmpty(message = "Vehicle Type must not be empty")
 	private String vehicleType;
+	
 	public Integer getVehicleId() {
 		return vehicleId;
 	}
